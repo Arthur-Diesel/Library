@@ -34,6 +34,7 @@ function registerBibliotecario(req, res){
 }
 
 function loginBibliotecario(req, res){
+    console.log('/bibliotecario/entrar')
     let email = req.body.email
     let senha = req.body.senha
 
@@ -91,6 +92,7 @@ function newBook(req, res){
 }
 
 function deleteBook(req, res){
+    console.log('/bibliotecario/remover_livro')
 
     let idLivro = req.body.idLivro
 
