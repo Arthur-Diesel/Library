@@ -52,9 +52,37 @@ function addDivida(idUsuario){
     })
 }
 
+function removeDivida(idUsuario, quantidadePagamento){
+    return new Promise((resolve, reject) => {
+        mysqlConfig.query(`UPDATE usuario SET divida = divida - ? WHERE idUsuario = ?`, [idUsuario, quantidadePagamento],
+        (err, result, fields) => {
+            if(err){
+                return reject(err)
+            } else {
+                return resolve(result)
+            }
+        })
+    })
+}
+
+function findDivida(idUsuario){
+    return new Promise((resolve, reject) => {
+        mysqlConfig.query('SELECT divida FROM usuario WHERE idUsuario = ?', [idUsuario],
+        (err, result, fields) => {
+            if(err){
+                return reject(err)
+            } else {
+                return resolve(result)
+            }
+        })
+    })
+}
+
 module.exports = {
     registerUser,
     findUser,
     findUserWithPassword,
-    addDivida
+    addDivida,
+    removeDivida,
+    findDivida
 }
