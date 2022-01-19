@@ -24,8 +24,8 @@ app.get('/', (req, res) => {
     res.status(200).json({mensagem: 'Bem vindo a Biblioteca Library!'})
 })
 
-app.use('/api/usuario', usuarioRoutes)
-app.use('/api/bibliotecario', bibliotecarioRoutes)
+app.use('/api/usuarios', usuarioRoutes)
+app.use('/api/bibliotecarios', bibliotecarioRoutes)
 app.use('/api/livros', livroRoutes)
 
 app.listen(process.env.PORT, () => {
