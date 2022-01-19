@@ -84,7 +84,6 @@ function borrowBook(req, res){
             emprestimoService.findEmprestimoEmAndamentoOrPendente(idUsuario)
                 .then((result) => {
                     if(result.length >= 1){
-                        console.log(result)
                         res.status(400).json({mensagem: 'O Usuário já possui um empréstimo pendente ou em andamento ou o livro!'})
                     } else {
                         emprestimoService.findStatusEmprestimoLivro(idLivro)
@@ -154,7 +153,6 @@ function returnBook(req, res){
 
 function getEmprestimos(req, res){
     let responsavel = req.responsavel
-    console.log(responsavel)
     userService.findUser(responsavel)
         .then((result) => {
             let idUsuario = result[0].idUsuario
@@ -169,11 +167,55 @@ function getEmprestimos(req, res){
         })
 }
 
+function getDivida(req, res){
+    let responsavel = req.responsavel
+    userService.findUser(responsavel)
+        .then((result) => {
+            let idUsuario = result[0].idUsuario
+            userService.findDivida(idUsuario)
+                .then((result) => {
+                    let divida = result[0].divida
+                    res.status(200).json({divida: divida})
+                })
+        })
+        .catch((err) => {
+            console.log('Houve um erro!\n' + err)
+            res.status(500).json({mensagem: 'Houve um erro no sistema!'})
+        })
+}
+
+function deleteDivida(req, res){
+    let responsavel = req.responsavel
+    let quantidadePagamento = req.body.quantidadePagamento
+
+    userService.findUser(responsavel)
+        .then((result) => {
+            let idUsuario = result[0].idUsuario
+            userService.findDivida(idUsuario)
+            .then((result) => {
+                let divida = result[0].divida
+                if(quantidadePagamento > divida){
+                    res.status(400).json({mensagem: 'O pagamento é maior que sua divida atual!', divida: divida})
+                } else {
+                    userService.removeDivida(idUsuario, quantidadePagamento)
+                        .then((result) => {
+                            res.status(200).json({mensagem: `${quantidadePagamento} foi descontado de sua divida!`})
+                        })
+                }
+            })
+        })
+        .catch((err) => {
+            console.log('Houve um erro!\n' + err)
+            res.status(500).json({mensagem: 'Houve um erro no sistema!'})
+        })
+}
 
 module.exports = {
     registerNewUser,
     login,
     borrowBook,
     returnBook,
-    getEmprestimos
+    getEmprestimos,
+    getDivida,
+    deleteDivida
 }
