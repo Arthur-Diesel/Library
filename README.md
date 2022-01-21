@@ -60,7 +60,7 @@
 
 <h4 align="left">:books: Livros</h4>
 <p align="left">Os livros são uma das peças principais do sistema, sendo assim podem ser cadastrados, emprestados e devolvidos por bibliotecários e usuários.</p>
-<h5 align="left"></h5>
+<h5 align="left">:bookmark_tabs: Rotas</h5>
 <ul>
     <li>/api/livros_ver_livros</li>
     <p>Utilizada para requisitar as informações dos livros cadastrados.</p>
