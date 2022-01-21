@@ -4,7 +4,7 @@ require('dotenv').config()
 var privateKey = process.env.JWT_KEY
 
 function validateUsuario(req, res, next){
-    let token = req.body.jwt
+    let token = req.headers.jwt
     try {
         var decoded = jwt.verify(token, privateKey)
         if(decoded.cargo == 'Usuário'){
@@ -14,7 +14,7 @@ function validateUsuario(req, res, next){
             res.status(401).json({mensagem: 'Apenas usuários podem acessar essa rota!'})
         }
     } catch(err) {
-        console.log(err)
+        // console.log(err)
         res.status(400).json({mensagem: 'Jwt inválido!'})
     }
 }

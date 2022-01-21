@@ -54,7 +54,7 @@ function addDivida(idUsuario){
 
 function removeDivida(idUsuario, quantidadePagamento){
     return new Promise((resolve, reject) => {
-        mysqlConfig.query(`UPDATE usuario SET divida = divida - ? WHERE idUsuario = ?`, [idUsuario, quantidadePagamento],
+        mysqlConfig.query(`UPDATE usuario SET divida = divida - ? WHERE idUsuario = ?`, [quantidadePagamento, idUsuario],
         (err, result, fields) => {
             if(err){
                 return reject(err)

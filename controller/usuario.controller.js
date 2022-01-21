@@ -75,10 +75,12 @@ function borrowBook(req, res){
             let idUsuario = result[0].idUsuario
             let idLivro = req.body.idLivro
 
-            let dateToday = new Date()
+            if(idLivro === undefined){
+                return res.status(400).json({mensagem: 'É necessário informar o id do livro!'})
+            }
+            
             let dateSevenDays = new Date()
             dateSevenDays.setDate(dateSevenDays.getDate() + 7)
-            let dataEmprestimo = dateToday.toISOString().split('T')[0]
             let dataDevolucao = dateSevenDays.toISOString().split('T')[0]
 
             emprestimoService.findEmprestimoEmAndamentoOrPendente(idUsuario)
@@ -89,7 +91,7 @@ function borrowBook(req, res){
                         emprestimoService.findStatusEmprestimoLivro(idLivro)
                         .then((result) => {
                             if(result.length == 0){
-                                emprestimoService.newEmprestimo(idUsuario, idLivro, dataEmprestimo, dataDevolucao)
+                                emprestimoService.newEmprestimo(idUsuario, idLivro, dataDevolucao)
                                     .then((result) => {
                                         livroService.alterStatusBookEmprestado(idLivro)
                                         res.status(200).json({mensagem: 'O livro foi emprestado com sucesso!'})
@@ -120,6 +122,10 @@ function borrowBook(req, res){
 function returnBook(req, res){
     let responsavel = req.responsavel
     let idEmprestimo = req.body.idEmprestimo
+
+    if(idEmprestimo === undefined){
+        return res.status(400).json({mensagem: 'É necessário informar o id do empréstimo!'})
+    }
 
     userService.findUser(responsavel)
         .then((result) => {
@@ -186,7 +192,21 @@ function getDivida(req, res){
 
 function deleteDivida(req, res){
     let responsavel = req.responsavel
-    let quantidadePagamento = req.body.quantidadePagamento
+    var quantidadePagamento = req.body.quantidadePagamento
+
+    if(quantidadePagamento === undefined){
+        return res.status(400).json({mensagem: 'É necessário informar a quantidade do pagamento!'})
+    }
+
+    try{
+        quantidadePagamento = parseFloat(quantidadePagamento)
+    } catch(err) {
+        return res.status(400).json({mensagem: 'É necessário informar uma quantidade real!'})   
+    }
+
+    if(quantidadePagamento < 0.10){
+        return res.status(400).json({mensagem: 'É necessário informar uma quantidade positiva!'})
+    }
 
     userService.findUser(responsavel)
         .then((result) => {

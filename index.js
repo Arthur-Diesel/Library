@@ -2,6 +2,10 @@ const express = require('express')
 const usuarioRoutes = require('./routes/usuario.routes')
 const bibliotecarioRoutes = require('./routes/bibliotecario.routes')
 const livroRoutes = require('./routes/livro.routes')
+const generoRoutes = require('./routes/genero.routes')
+const idiomaRoutes = require('./routes/idioma.routes')
+const autorRoutes = require('./routes/autor.routes')
+const nacionalidadeRoutes = require('./routes/nacionalidade.routes')
 const schedule = require('node-schedule');
 const dailyJobs = require('./jobs/dailyJobs')
 
@@ -27,6 +31,10 @@ app.get('/', (req, res) => {
 app.use('/api/usuarios', usuarioRoutes)
 app.use('/api/bibliotecarios', bibliotecarioRoutes)
 app.use('/api/livros', livroRoutes)
+app.use('/api/generos', generoRoutes)
+app.use('/api/idiomas', idiomaRoutes)
+app.use('/api/autores', autorRoutes)
+app.use('/api/nacionalidades', nacionalidadeRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log('Running at localhost:' + process.env.PORT)

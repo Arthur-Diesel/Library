@@ -1,8 +1,8 @@
 const mysqlConfig = require('../db/config')
 
-function newEmprestimo(idUsuario, idLivro, dataEmprestimo, dataDevolucao){
+function newEmprestimo(idUsuario, idLivro, dataDevolucao){
     return new Promise((resolve, reject) => {
-        mysqlConfig.query(`INSERT INTO emprestimo (idUsuario, idLivro, dataEmprestimo, dataDevolucao) VALUES (?, ?, ?, ?)`, [idUsuario, idLivro, dataEmprestimo, dataDevolucao],
+        mysqlConfig.query(`INSERT INTO emprestimo (idUsuario, idLivro, dataDevolucao) VALUES (?, ?, ?)`, [idUsuario, idLivro, dataDevolucao],
         (err, result, fields) => {
             if(err){
                 return reject(err)

@@ -1,8 +1,8 @@
 const mysqlConfig = require('../db/config')
 
-function addBook(titulo, autor, ano, paginas, genero, lingua, bibliotecarioResponsavel, dataInsercao){
+function addBook(titulo, idAutor, ano, paginas, idGenero, idIdioma, bibliotecarioResponsavel){
     return new Promise((resolve, reject) => {
-        mysqlConfig.query(`INSERT INTO livro (titulo, autor, ano, paginas, genero, lingua, bibliotecarioResponsavel, dataInsercao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [titulo,autor,ano,paginas,genero,lingua,bibliotecarioResponsavel,dataInsercao],
+        mysqlConfig.query(`INSERT INTO livro (titulo, idAutor, ano, paginas, idGenero, idIdioma, bibliotecarioResponsavel) VALUES (?, ?, ?, ?, ?, ?, ?)`, [titulo,idAutor,ano,paginas, idGenero, idIdioma, bibliotecarioResponsavel],
         (err, result, fields) => {
             if (err) {
                 return reject(err)
@@ -33,7 +33,7 @@ function removeBook(idLivro){
 
 function findBooks(){
     return new Promise((resolve, reject) => {
-        mysqlConfig.query(`SELECT idLivro, titulo, autor, ano, paginas, genero, lingua, statusLivro FROM livro`,
+        mysqlConfig.query(`SELECT li.idLivro, li.titulo, li.idAutor, au.nome, li.ano, li.paginas, li.idGenero, ge.genero, li.idIdioma, id.idioma, li.statusLivro FROM livro li INNER JOIN genero ge ON li.idGenero = ge.idGenero INNER JOIN idioma id ON li.idIdioma = id.idIdioma INNER JOIN autor au ON li.idAutor = au.idAutor`,
         (err, result, fields) => {
             if(err){
                 return reject(err)
