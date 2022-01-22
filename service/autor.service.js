@@ -50,7 +50,7 @@ function removeAutor(idAutor){
 
 function findAutores(){
     return new Promise((resolve, reject) => {
-        mysqlConfig.query("SELECT * FROM autor", (err, result, fields) => {
+        mysqlConfig.query("SELECT au.idAutor, au.nome, au.dataNascimento, au.dataMorte, au.bibliotecarioResponsavel, au.idNacionalidade, na.nacionalidade FROM autor au INNER JOIN nacionalidade na ON au.idNacionalidade = na.idNacionalidade", (err, result, fields) => {
             if(err){
                 return reject(err)
             } else {

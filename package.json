@@ -14,5 +14,8 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "node-schedule": "^2.1.0"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5"
   }
 }

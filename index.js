@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const usuarioRoutes = require('./routes/usuario.routes')
 const bibliotecarioRoutes = require('./routes/bibliotecario.routes')
 const livroRoutes = require('./routes/livro.routes')
@@ -12,6 +13,7 @@ const dailyJobs = require('./jobs/dailyJobs')
 const app = express()
 
 app.use(express.urlencoded({extended: true }))
+app.use(cors())
 
 
 const rule = new schedule.RecurrenceRule();
