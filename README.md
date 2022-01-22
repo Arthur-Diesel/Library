@@ -1,4 +1,4 @@
-<h1 align="center">:open_book: Library</h1>
+<h1 align="center">:open_book: Library API</h1>
 <h2 align="center">API Construída com Node, Express, JWT e outras bibliotecas.</h2>
 <h3 align="left">:bulb: Introdução</h3>
 <p align="left">A API tem o objetivo de simular uma biblioteca, possuindo 7 entidades, os bibliotecários, os usuários, os livros, os gêneros que estão relacionados com os livros, os idiomas que representam a língua em que os livros foram escritos, os autores e as nacionalidades, que representam o local de nascimento destes.</p>
